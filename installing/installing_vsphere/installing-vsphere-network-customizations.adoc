@@ -22,19 +22,15 @@ The steps for performing a user-provisioned infrastructure installation are prov
 
 == Prerequisites
 
-* Review details about the
-xref:../../architecture/architecture-installation.adoc#architecture-installation[{product-title} installation and update]
-processes.
-* If you use a firewall, you must
-xref:../../installing/install_config/configuring-firewall.adoc#configuring-firewall[configure it to access Red Hat Insights].
+* You reviewed details about the xref:../../architecture/architecture-installation.adoc#architecture-installation[{product-title} installation and update] processes.
+* You read the documentation on xref:../../installing/installing-preparing.adoc#installing-preparing[selecting a cluster installation method and preparing it for users].
+* If you use a firewall, you xref:../../installing/install_config/configuring-firewall.adoc#configuring-firewall[configured it to allow the sites] that your cluster requires access to.
 
 include::modules/cluster-entitlements.adoc[leveloffset=+1]
 
 include::modules/installation-vsphere-infrastructure.adoc[leveloffset=+1]
 
 include::modules/installation-requirements-user-infra.adoc[leveloffset=+1]
-
-include::modules/installation-infrastructure-user-infra.adoc[leveloffset=+1]
 
 include::modules/installation-network-user-infra.adoc[leveloffset=+2]
 
@@ -44,6 +40,12 @@ include::modules/installation-network-user-infra.adoc[leveloffset=+2]
 
 include::modules/installation-dns-user-infra.adoc[leveloffset=+2]
 
+include::modules/installation-load-balancing-user-infra.adoc[leveloffset=+2]
+
+include::modules/installation-infrastructure-user-infra.adoc[leveloffset=+1]
+
+include::modules/installation-user-provisioned-validating-dns.adoc[leveloffset=+1]
+
 include::modules/ssh-agent-using.adoc[leveloffset=+1]
 
 include::modules/installation-obtaining-installer.adoc[leveloffset=+1]
@@ -52,10 +54,8 @@ include::modules/installation-initializing-manual.adoc[leveloffset=+1]
 
 include::modules/installation-vsphere-config-yaml.adoc[leveloffset=+2]
 
-include::modules/nw-install-config-parameters.adoc[leveloffset=+2]
-
 // Network Operator specific configuration
-
+include::modules/nw-network-config.adoc[leveloffset=+1]
 include::modules/nw-modifying-operator-install-config.adoc[leveloffset=+1]
 include::modules/nw-operator-cr.adoc[leveloffset=+1]
 
@@ -77,7 +77,7 @@ include::modules/cli-logging-in-kubeadmin.adoc[leveloffset=+1]
 
 include::modules/installation-approve-csrs.adoc[leveloffset=+1]
 
-include::modules/installation-operators-config.adoc[leveloffset=+1]
+include::modules/installation-operators-config.adoc[leveloffset=+2]
 
 include::modules/registry-removed.adoc[leveloffset=+2]
 

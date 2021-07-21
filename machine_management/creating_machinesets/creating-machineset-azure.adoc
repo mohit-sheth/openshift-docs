@@ -1,5 +1,5 @@
 [id="creating-machineset-azure"]
-= Creating a machine set in Azure
+= Creating a machine set on Azure
 include::modules/common-attributes.adoc[]
 :context: creating-machineset-azure
 
@@ -16,3 +16,5 @@ include::modules/machineset-creating.adoc[leveloffset=+1]
 include::modules/machineset-non-guaranteed-instance.adoc[leveloffset=+1]
 
 include::modules/machineset-creating-non-guaranteed-instances.adoc[leveloffset=+1]
+
+include::modules/machineset-customer-managed-encryption-azure.adoc[leveloffset=+1]

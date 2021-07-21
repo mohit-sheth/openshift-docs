@@ -1,17 +1,16 @@
 // Module included in the following assemblies:
 //
-// * migration/migrating_3_4/migrating-applications-with-cam-3-4.adoc
-// * migration/migrating_4_1_4/migrating-applications-with-cam-4-1-4.adoc
-// * migration/migrating_4_2_4/migrating-applications-with-cam-4-2-4.adoc
+// * migrating_from_ocp_3_to_4/migrating-applications-3-4.adoc
+// * migration-toolkit-for-containers/migrating-applications-with-mtc
 
-[id='migration-running-migration-plan-cam_{context}']
+[id="migration-running-migration-plan-cam_{context}"]
 = Running a migration plan in the {mtc-short} web console
 
 You can stage or migrate applications and data with the migration plan you created in the {mtc-full} ({mtc-short}) web console.
 
 [NOTE]
 ====
-{mtc-short} sets the reclaim policy of migrated persistent volumes (PVs) to `Retain` on the target cluster.
+During migration, {mtc-short} sets the reclaim policy of migrated persistent volumes (PVs) to `Retain` on the target cluster.
 
 The `Backup` custom resource contains a `PVOriginalReclaimPolicy` annotation that indicates the original reclaim policy. You can manually restore the reclaim policy of the migrated PVs.
 ====
@@ -26,14 +25,6 @@ The {mtc-short} web console must contain the following:
 * Valid migration plan
 
 .Procedure
-
-. Log in to the source cluster.
-. Delete old images:
-+
-[source,terminal]
-----
-$ oc adm prune images
-----
 
 . Log in to the {mtc-short} web console and click *Migration plans*.
 . Click the *Options* menu {kebab} next to a migration plan and select *Stage* to copy data from the source cluster to the target cluster without stopping the application.

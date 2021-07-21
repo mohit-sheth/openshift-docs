@@ -17,7 +17,16 @@ include::modules/nw-installation-ingress-config-asset.adoc[leveloffset=+1]
 
 include::modules/nw-ingress-controller-configuration-parameters.adoc[leveloffset=+1]
 
-include::modules/nw-ingress-controller-tls-profiles.adoc[leveloffset=+2]
+[id="configuring-ingress-controller-tls"]
+=== Ingress Controller TLS security profiles
+
+TLS security profiles provide a way for servers to regulate which ciphers a connecting client can use when connecting to the server.
+
+// Understanding TLS security profiles
+include::modules/tls-profiles-understanding.adoc[leveloffset=+3]
+
+// Configuring the TLS profile for the Ingress Controller
+include::modules/tls-profiles-ingress-configuring.adoc[leveloffset=+3]
 
 include::modules/nw-ingress-controller-endpoint-publishing-strategies.adoc[leveloffset=+2]
 
@@ -38,6 +47,8 @@ include::modules/nw-scaling-ingress-controller.adoc[leveloffset=+2]
 
 include::modules/nw-configure-ingress-access-logging.adoc[leveloffset=+2]
 
+include::modules/nw-ingress-setting-thread-count.adoc[leveloffset=+2]
+
 include::modules/nw-ingress-sharding.adoc[leveloffset=+2]
 
 include::modules/nw-ingress-sharding-route-labels.adoc[leveloffset=+3]
@@ -45,6 +56,8 @@ include::modules/nw-ingress-sharding-route-labels.adoc[leveloffset=+3]
 include::modules/nw-ingress-sharding-namespace-labels.adoc[leveloffset=+3]
 
 include::modules/nw-ingress-setting-internal-lb.adoc[leveloffset=+2]
+
+include::modules/nw-ingress-controller-configuration-gcp-global-access.adoc[leveloffset=+2]
 
 include::modules/nw-ingress-default-internal.adoc[leveloffset=+2]
 
@@ -56,7 +69,11 @@ include::modules/nw-using-ingress-forwarded.adoc[leveloffset=+2]
 
 include::modules/nw-http2-haproxy.adoc[leveloffset=+2]
 
+include::modules/nw-ingress-controller-configuration-proxy-protocol.adoc[leveloffset=+2]
+
 include::modules/nw-ingress-configuring-application-domain.adoc[leveloffset=+2]
+
+include::modules/nw-ingress-converting-http-header-case.adoc[leveloffset=+2]
 
 //include::modules/nw-ingress-select-route.adoc[leveloffset=+2]
 

@@ -1,19 +1,59 @@
 // Module included in the following assemblies:
-// * migration/migrating_3_4/migrating-applications-with-cam-3-4.adoc
-// * migration/migrating_4_1_4/migrating-applications-with-cam-4-1-4.adoc
-// * migration/migrating_4_2_4/migrating-applications-with-cam-4-2-4.adoc
+//
+// * migrating_from_ocp_3_to_4/migrating-applications-3-4.adoc
+// * migrating_from_ocp_3_to_4/advanced-migration-options-3-4.adoc
+// * migration-toolkit-for-containers/migrating-applications-with-mtc
+// * migration-toolkit-for-containers/advanced-migration-options-mtc.adoc
 
-[id='migration-prerequisites_{context}']
-= Prerequisites
+[id="migration-prerequisites_{context}"]
+= Migration prerequisites
 
-The {mtc-full} ({mtc-short}) has the following prerequisites:
+* You must be logged in as a user with `cluster-admin` privileges on all clusters.
 
-ifdef::migrating-3-4[]
-* You must have `podman` installed.
-* The source cluster must be {product-title} 3.7, 3.9, 3.10, or 3.11.
+.Direct image migration
+
+* You must ensure that the secure internal registry of the source cluster is exposed.
+* You must create a route to the exposed registry.
+
+.Direct volume migration
+
+* If your clusters use proxies, you must configure an Stunnel TCP proxy.
+
+ifdef::migrating-applications-3-4,advanced-migration-options-3-4[]
+.Internal images
+
+* If your application uses internal images from the `openshift` namespace, you must ensure that the required versions of the images are present on the target cluster.
++
+You can manually update an image stream tag in order to use a deprecated {product-title} 3 image on an {product-title} {product-version} cluster.
 endif::[]
-* You must upgrade the source cluster to the latest z-stream release.
-* You must have `cluster-admin` privileges on all clusters.
-* The source and target clusters must have unrestricted network access to the replication repository.
-* The cluster on which the `MigrationController` CR is installed must have unrestricted network access to the other clusters.
-* If your application uses images from the `openshift` namespace, the required versions of the images must be present on the target cluster. You can manually update an image stream tag in order to use a deprecated {product-title} 3 image on an {product-title} {product-version} cluster.
+
+.Clusters
+
+* The source cluster must be upgraded to the latest {mtc-short} z-stream release.
+* The {mtc-short} version must be the same on all clusters.
+
+.Network
+
+* The clusters have unrestricted network access to each other and to the replication repository.
+* If you copy the persistent volumes with `move`, the clusters must have unrestricted network access to the remote volumes.
+ifdef::migrating-applications-3-4,advanced-migration-options-3-4[]
+* You must enable the following ports on an {product-title} 3 cluster:
+** `8443` (API server)
+** `443` (routes)
+** `53` (DNS)
+endif::[]
+* You must enable the following ports on an {product-title} 4 cluster:
+** `6443` (API server)
+** `443` (routes)
+** `53` (DNS)
+* You must enable port `443` on the replication repository if you are using TLS.
+
+.Persistent volumes (PVs)
+
+* The PVs must be valid.
+* The PVs must be bound to persistent volume claims.
+* If you use snapshots to copy the PVs, the following additional prerequisites apply:
+** The cloud provider must support snapshots.
+** The PVs must have the same cloud provider.
+** The PVs must be located in the same geographic region.
+** The PVs must have the same storage class.

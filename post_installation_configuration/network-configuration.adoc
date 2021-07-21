@@ -3,6 +3,7 @@
 = Post-installation network configuration
 include::modules/common-attributes.adoc[]
 include::modules/ossm-document-attributes.adoc[]
+
 toc::[]
 
 After installing {product-title}, you can further expand and customize your
@@ -101,4 +102,4 @@ include::modules/router-performance-optimizations.adoc[leveloffset=+2]
 
 You can configure some aspects of a {product-title} on {rh-openstack-first} cluster after installation.
 
-include::modules/installation-osp-configuring-api-floating-ip.adoc[leveloffset=+1]
+include::modules/installation-osp-configuring-api-floating-ip.adoc[leveloffset=+2]

@@ -24,6 +24,11 @@ spec:
     reserved: 0-1
 ...
 ----
++
+[NOTE]
+====
+When you configure reserved and isolated CPUs, the infra containers in pods use the reserved CPUs and the application containers use the isolated CPUs.
+====
 
 . Create the pod that uses exclusive CPUs, and set `irq-load-balancing.crio.io` and `cpu-quota.crio.io` annotations to `disable`. For example:
 +
@@ -39,7 +44,7 @@ metadata:
 spec:
   containers:
   - name: dynamic-irq-pod
-    image: "quay.io/openshift-kni/cnf-tests:4.6"
+    image: "quay.io/openshift-kni/cnf-tests:4.8"
     command: ["sleep", "10h"]
     resources:
       requests:

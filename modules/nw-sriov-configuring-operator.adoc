@@ -33,10 +33,10 @@ The `SriovOperatorConfig` object provides several fields for configuring the ope
 The Network Resources Injector is a Kubernetes Dynamic Admission Controller
 application. It provides the following capabilities:
 
-* Mutation of resource requests and limits in `Pod` specification to add an SR-IOV resource name according to an SR-IOV network attachment definition annotation.
-* Mutation of `Pod` specifications with downward API volume to expose pod annotations and labels to the running container as files under the `/etc/podnetinfo` path.
+* Mutation of resource requests and limits in a pod specification to add an SR-IOV resource name according to an SR-IOV network attachment definition annotation.
+* Mutation of a pod specification with a Downward API volume to expose pod annotations, labels, and huge pages requests and limits. Containers that run in the pod can access the exposed information as files under the `/etc/podnetinfo` path.
 
-By default the Network Resources Injector is enabled by the SR-IOV operator and runs as a daemon set on all master nodes. The following is an example of Network Resources Injector pods running in a cluster with three master nodes:
+By default, the Network Resources Injector is enabled by the SR-IOV Network Operator and runs as a daemon set on all control plane nodes (also known as the master nodes). The following is an example of Network Resources Injector pods running in a cluster with three control plane nodes:
 
 [source,terminal]
 ----
@@ -53,16 +53,16 @@ network-resources-injector-lktz5          1/1     Running   0          10m
 ----
 
 [id="about-sr-iov-operator-admission-control-webhook_{context}"]
-== About the SR-IOV Operator admission controller webhook
+== About the SR-IOV Network Operator admission controller webhook
 
-The SR-IOV Operator Admission Controller webhook is a Kubernetes Dynamic
+The SR-IOV Network Operator Admission Controller webhook is a Kubernetes Dynamic
 Admission Controller application. It provides the following capabilities:
 
 * Validation of the `SriovNetworkNodePolicy` CR when it is created or updated.
 * Mutation of the `SriovNetworkNodePolicy` CR by setting the default value for the `priority` and `deviceType` fields when the CR is created or updated.
 
-By default the SR-IOV Operator Admission Controller webhook is enabled by the operator and runs as a daemon set on all master nodes.
-The following is an example of the Operator Admission Controller webhook pods running in a cluster with three master nodes:
+By default the SR-IOV Network Operator Admission Controller webhook is enabled by the Operator and runs as a daemon set on all control plane nodes.
+The following is an example of the Operator Admission Controller webhook pods running in a cluster with three control plane nodes:
 
 [source,terminal]
 ----
@@ -94,7 +94,7 @@ To disable or enable the Network Resources Injector, which is enabled by default
 
 * Install the OpenShift CLI (`oc`).
 * Log in as a user with `cluster-admin` privileges.
-* You must have installed the SR-IOV Operator.
+* You must have installed the SR-IOV Network Operator.
 
 .Procedure
 
@@ -106,9 +106,25 @@ $ oc patch sriovoperatorconfig default \
   --type=merge -n openshift-sriov-network-operator \
   --patch '{ "spec": { "enableInjector": <value> } }'
 ----
++
+[TIP]
+====
+You can alternatively apply the following YAML to update the Operator:
+
+[source,yaml]
+----
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovOperatorConfig
+metadata:
+  name: default
+  namespace: openshift-sriov-network-operator
+spec:
+  enableInjector: <value>
+----
+====
 
 [id="disable-enable-sr-iov-operator-admission-control-webhook_{context}"]
-== Disabling or enabling the SR-IOV Operator admission controller webhook
+== Disabling or enabling the SR-IOV Network Operator admission controller webhook
 
 To disable or enable the admission controller webhook, which is enabled by default, complete the following procedure.
 
@@ -116,7 +132,7 @@ To disable or enable the admission controller webhook, which is enabled by defau
 
 * Install the OpenShift CLI (`oc`).
 * Log in as a user with `cluster-admin` privileges.
-* You must have installed the SR-IOV Operator.
+* You must have installed the SR-IOV Network Operator.
 
 .Procedure
 
@@ -128,6 +144,22 @@ $ oc patch sriovoperatorconfig default --type=merge \
   -n openshift-sriov-network-operator \
   --patch '{ "spec": { "enableOperatorWebhook": <value> } }'
 ----
++
+[TIP]
+====
+You can alternatively apply the following YAML to update the Operator:
+
+[source,yaml]
+----
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovOperatorConfig
+metadata:
+  name: default
+  namespace: openshift-sriov-network-operator
+spec:
+  enableOperatorWebhook: <value>
+----
+====
 
 [id="configuring-custom-nodeselector_{context}"]
 == Configuring a custom NodeSelector for the SR-IOV Network Config daemon
@@ -153,9 +185,26 @@ $ oc patch sriovoperatorconfig default --type=json \
   --patch '[{
       "op": "replace",
       "path": "/spec/configDaemonNodeSelector",
-      "value": {<node-label>}
+      "value": {<node_label>}
     }]'
 ----
 +
-Replace `<node-label>` with a label to apply as in the following example:
+Replace `<node_label>` with a label to apply as in the following example:
 `"node-role.kubernetes.io/worker": ""`.
++
+[TIP]
+====
+You can alternatively apply the following YAML to update the Operator:
+
+[source,yaml]
+----
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovOperatorConfig
+metadata:
+  name: default
+  namespace: openshift-sriov-network-operator
+spec:
+  configDaemonNodeSelector:
+    <node_label>
+----
+====

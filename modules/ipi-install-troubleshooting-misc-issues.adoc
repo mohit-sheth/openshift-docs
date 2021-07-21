@@ -121,7 +121,7 @@ If the hostname is `localhost`, proceed with the following steps.
 +
 [NOTE]
 ====
-Where `X` is the master node number.
+Where `X` is the control plane node (also known as the master node) number.
 ====
 
 . Force the cluster node to renew the DHCP lease:
@@ -194,7 +194,7 @@ $ oc get csr
 +
 [source,terminal]
 ----
-$ oc get csr <pending_csr> -o jsonpath='{.spec.request}' | base64 -d | openssl req -noout -text
+$ oc get csr <pending_csr> -o jsonpath='{.spec.request}' | base64 --decode | openssl req -noout -text
 ----
 
 . Remove any `csr` that contains `Subject Name: localhost.localdomain`:

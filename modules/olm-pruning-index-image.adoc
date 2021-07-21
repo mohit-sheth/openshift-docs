@@ -2,14 +2,12 @@
 //
 // * operators/admin/olm-restricted-networks.adoc
 // * operators/admin/olm-managing-custom-catalogs.adoc
-// * migration/migrating_3_4/deploying-cam-3-4.adoc
-// * migration/migrating_4_1_4/deploying-cam-4-1-4.adoc
-// * migration/migrating_4_2_4/deploying-cam-4-2-4.adoc
 
 ifdef::openshift-origin[]
-:catalog-name: upstream-community-operators
-:index-image-pullspec: quay.io/operator-framework/upstream-community-operators:latest
-:index-image: upstream-community-operators:latest
+:catalog-name: catalog
+:index-image-pullspec: quay.io/operatorhubio/catalog:latest
+:index-image: catalog:latest
+:registry-image: quay.io/openshift/origin-operator-registry:4.8.0
 :package1: couchdb-operator
 :package2: eclipse-che
 :package3: etcd
@@ -18,6 +16,7 @@ ifndef::openshift-origin[]
 :catalog-name: redhat-operators
 :index-image-pullspec: registry.redhat.io/redhat/redhat-operator-index:v{product-version}
 :index-image: redhat-operator-index:v{product-version}
+:registry-image: registry.redhat.io/openshift4/ose-operator-registry:v4.8
 :package1: advanced-cluster-management
 :package2: jaeger-product
 :package3: quay-operator
@@ -26,7 +25,7 @@ endif::[]
 [id="olm-pruning-index-image_{context}"]
 = Pruning an index image
 
-An index image, based on the Operator Bundle Format, is a containerized snapshot of an Operator catalog. You can prune an index of all but a specified list of packages, which creates a copy of the source index containing only the Operators that you want.
+An index image, based on the Operator bundle format, is a containerized snapshot of an Operator catalog. You can prune an index of all but a specified list of packages, which creates a copy of the source index containing only the Operators that you want.
 
 ifeval::["{context}" != "olm-managing-custom-catalogs"]
 When configuring Operator Lifecycle Manager (OLM) to use mirrored content on restricted network {product-title} clusters, use this pruning method if you want to only mirror a subset of Operators from the default catalogs.
@@ -122,13 +121,13 @@ $ grpcurl -plaintext localhost:50051 api.Registry/ListPackages > packages.out
 $ opm index prune \
     -f {index-image-pullspec} \// <1>
     -p {package1},{package2},{package3} \// <2>
-    -t <target_registry>:<port>/<namespace>/{index-image} \// <3>
-    -i registry.redhat.io/openshift4/ose-operator-registry/{index-image} <4>
+    [-i {registry-image}] \// <3>
+    -t <target_registry>:<port>/<namespace>/{index-image} <4>
 ----
 <1> Index to prune.
 <2> Comma-separated list of packages to keep.
-<3> Custom tag for new index image being built.
-<4> For IBM Power Systems and IBM Z images only, you must add the `-i` entry to the command.
+<3> Required only for IBM Power Systems and IBM Z images: Operator Registry base image with the tag that matches the target {product-title} cluster major and minor version.
+<4> Custom tag for new index image being built.
 
 . Run the following command to push the new index image to your target registry:
 +
@@ -145,6 +144,7 @@ endif::[]
 :!catalog-name:
 :!index-image-pullspec:
 :!index-image:
+:!registry-image:
 :!package1:
 :!package2:
 :!package3:

@@ -29,6 +29,8 @@ spacing in between, except where noted:
 = Assembly title                                                <2>
 include::modules/common-attributes.adoc[]                       <3>
 :context: <unique-context-for-assembly>                         <4>
+                                                                <5>
+toc::[]                                                         <6>
 ----
 
 <1> A unique (within OpenShift docs) anchor id for this assembly. Example: cli-developer-commands
@@ -41,6 +43,8 @@ The `{product-name}` and `{product-version}` common attributes are not defined i
 ====
 +
 <4> Context used for identifying headers in modules that is the same as the anchor id. Example: cli-developer-commands.
+<5> A blank line. You *must* have a blank line here before the toc.
+<6> The table of contents for the current assembly.
 
 After the heading block and a single whitespace line, you can include any content for this assembly.
 
@@ -80,14 +84,6 @@ Example:
 = Basic CLI commands
 ----
 
-*All headings after the initial title must have a section anchor, with no line spaces between the
-anchor and the section title and the anchor id should be similar to the section title*:
-
-----
-[id="<section-anchor>_{context}"]
-=== Section title
-----
-
 == Assembly/module file names
 
 Try to shorten the file name as much as possible _without_ abbreviating important terms that may cause confusion. For example, the `managing-authorization-policies.adoc` file name would be appropriate for an assembly titled "Managing Authorization Policies".
@@ -95,6 +91,36 @@ Try to shorten the file name as much as possible _without_ abbreviating importan
 == Directory names
 
 If you create a directory with a multiple-word name, separate each word with an underscore, for example `backup_and_restore`. Do not create a top-level directory in the repository without checking with the docs team. In the main OpenShift docs, you can create one level of subdirectories. In the docs for features that are designed to be used with OpenShift, such as Service Mesh and OpenShift virtualization, you can create two levels of subdirectories.
+
+When creating a new directory or subdirectory, you must create two symbolic links in it:
+
+* An `images` symbolic link to the top-level `images/` directory
+* A `modules` symbolic link to the top-level `modules/` directory
+
+If the directory that contains an assembly does not have the `images` symbolic link, any images in that assembly or its modules will not be included properly when building the docs.
+
+[TIP]
+====
+To create the symbolic links:
+
+. Navigate to the directory that you need to add the links in.
+. Use the following command to create a symbolic link:
++
+----
+$ ln -s <target_directory> <link_name>
+----
++
+For example, if you are creating the links in a directory that is two levels deep, such as `cli_reference/openshift_cli`, use the following commands:
++
+----
+$ ln -s ../../images/ images
+$ ln -s ../../modules/ modules
+----
++
+Be sure to adjust the number of levels to back up (`../`) depending on how deep your directory is.
+
+If you accidentally create an incorrect link, you can remove that link by using `unlink <link_name>`.
+====
 
 == Assembly/Module titles and section headings
 
@@ -110,7 +136,7 @@ use a gerund form in headings, such as:
 
 Do not use "Overview" as a heading.
 
-Do not use backticks or other markup in headings.
+Do not use backticks or other markup in assembly or module headings.
 
 === Discrete headings
 
@@ -128,6 +154,72 @@ To use a discrete heading, just add `[discrete]` to the line before your unique 
 == Managing authorization policies
 ----
 
+== Anchoring titles and section headings
+
+All titles and section headings must have an anchor ID. The anchor ID must be similar to the title or section heading.
+
+=== Anchoring in assembly files
+
+The following is an example anchor ID in an assembly file:
+
+----
+[id="configuring-alert-notifications"]
+= Configuring alert notifications
+----
+
+[NOTE]
+====
+Do not include line spaces between the anchor ID and the section title.
+====
+
+=== Anchoring in module files
+
+You must add the `{context}` variable to the end of anchor IDs in module files. When called, the `{context}` variable is resolved into the value declared in the `:context:` attribute in the corresponding assembly file. This enables cross-referencing to module IDs in context to a specific assembly and is useful when a module is included in multiple assemblies.
+
+The following is an example of an anchor ID in a module file:
+
+----
+[id="sending-notifications-to-external-systems_{context}"]
+= Sending notifications to external systems
+----
+
+[NOTE]
+====
+The `{context}` variable must be preceded by an underscore (`_`) when declared in an anchor ID.
+====
+
+=== Anchoring "Prerequisites", "Additional resources", and "Next steps" titles in assemblies
+
+Use unique IDs for "Prerequisites", "Additional resources", and "Next steps" titles in assemblies. You can add the prefixes `prerequisites_`, `additional-resources_`, or `next-steps_` to a unique string that describes the assembly topic. The unique string can match the value assigned to the `:context:` attribute in the assembly.
+
+[NOTE]
+====
+The `prerequisites_`, `additional-resources_`, and `next-steps_` prefixes must end with an underscore (`_`) when declared in an anchor ID in an assembly.
+====
+
+The following examples include IDs that are unique to the "Configuring alert notifications" assembly:
+
+*Example unique ID for a "Prerequisites" title*
+
+----
+[id="prerequisites_configuring-alert-notifications"]
+== Prerequisites
+----
+
+*Example unique ID for an "Additional resources" title*
+
+----
+[id="additional-resources_configuring-alert-notifications"]
+== Additional resources
+----
+
+*Example unique ID for a "Next steps" title*
+
+----
+[id="next-steps_configuring-alert-notifications"]
+== Next steps
+----
+
 == Writing assemblies
 An _assembly_ is a collection of modules that describes how to accomplish a user story.
 
@@ -136,7 +228,7 @@ link:https://redhat-documentation.github.io/modular-docs/#forming-assemblies[Red
 
 [NOTE]
 ====
-When using `Prerequisites`, `Next steps`, and `Additional resources` headings in an assembly, use `==` formatting, such as `== Prerequisites` and `== Additional resources`. Use of this heading syntax at the assembly level indicates that the sections relate to the whole assembly. Only use `.` syntax (`.Additional resources`) to follow the module as a trailing include at the assembly level, which indicates that the resources apply specifically to the module.
+When using "Prerequisites", "Next steps", and "Additional resources" headings in an assembly, use `==` formatting, such as `== Prerequisites` and `== Additional resources`. Use of this heading syntax at the assembly level indicates that the sections relate to the whole assembly. Only use `.` syntax (`.Additional resources`) to follow the module as a trailing include at the assembly level, which indicates that the resources apply specifically to the module.
 ====
 
 == Writing concepts
@@ -440,13 +532,13 @@ URIs beginning with `http` are forbidden for security reasons and will fail the
 documentation build.
 ====
 
-For example, if you want to embed the link:https://github.com/openshift/installer/blob/release-4.7/upi/azure/01_vnet.json[01_vnet.json] template, include the URI of its raw file version like this:
+For example, if you want to embed the link:https://github.com/openshift/installer/blob/release-4.8/upi/azure/01_vnet.json[01_vnet.json] template, include the URI of its raw file version like this:
 
 ```
 .`01_vnet.json` ARM template
 [source,json]
 ----
-include::https://raw.githubusercontent.com/openshift/installer/release-4.7/upi/azure/01_vnet.json[]
+\include::https://raw.githubusercontent.com/openshift/installer/release-4.8/upi/azure/01_vnet.json[]
 ----
 ```
 
@@ -470,6 +562,16 @@ See
 link:https://github.com/openshift/openshift-docs/pull/13878/files#diff-615ba1bf3b09d11a9c2604b775aa32f2[an
 example] of how this is applied.
 
+== Indicating deprecated features
+
+To indicate that a feature is deprecated, include the `modules/deprecated-feature.adoc` file in the feature's assembly, or to each relevant assembly such as for a deprecated Operator, to keep the supportability wording consistent across deprecated features. Provide a value for the :FeatureName: variable before you include this module.
+
+See link:https://github.com/openshift/openshift-docs/pull/31776/files[an example] of how this is applied.
+
+== Verification of your content
+All documentation changes must be verified by a QE team associate before merging. This includes executing all "Procedure" changes and confirming expected results. There are exceptions for typo-level changes, formatting-only changes, and other negotiated documentation sets and distributions.
+
+If a documentation change is due to a Bugzilla bug or Jira issue, the bug/issue should be put on ON_QA when you have a PR ready. Once QE approval is given (either in the bug/issue or in the PR), the QE associate should move the bug/issue status to VERIFIED, at which point the associated PR can be merged. It is also ok for the assigned writer to change the status of the bug/issue to VERIFIED if approval for the changes has been provided in another forum (slack, PR, or email). The writer should indicate that the QE team approved the change as a comment in the bug/issue.
 
 == Images
 
@@ -477,7 +579,10 @@ example] of how this is applied.
 
 To include a block image (an image on its own line):
 
-1. Put the image file in the symlinked `images` folder.
+1. Put the image file in the `images` folder.
++
+Ensure that the folder containing your assembly contains an `images` symbolic link to the top-level `images/` directory, otherwise the image will not be found when building the docs.
+
 2. In the `.adoc` content, use this format to link to the image:
 +
 ----
@@ -540,6 +645,11 @@ For all of the system blocks including table delimiters, use four characters. Fo
 |=== for tables
 ---- for code blocks
 ....
+
+[NOTE]
+====
+You can use backticks or other markup in the title for a block, such as a code block `.Example` or a table `.Description` title.
+====
 
 === Code blocks, command syntax, and example output
 
@@ -952,6 +1062,7 @@ Note the following:
 * To match the table cell's font size, start the ordered list with a `[.small]`
 style and wrap it in a `--` block.
 
+[id="collapsible-content"]
 === Collapsible content
 You can collapse sections of content by using the `collapsible` option, which converts the Asciidoctor markup to HTML `details` and `summary` sections. The `collapsible` option is used at the writer's discretion and is appropriate for considerably long code blocks, lists, or other such content that significantly increases the length of a module or assembly.
 
@@ -1098,7 +1209,7 @@ When referring to actual instances of API objects, use link:https://en.wikipedia
 
 [NOTE]
 ====
-Do not use backticks or other markup in headings.
+Do not use backticks or other markup in assembly or module headings. You can use backticks or other markup in the title for a block, such as a code block `.Example` or a table `.Description` title.
 ====
 
 Be sure to match the proper object type (or `kind` in Kubernetes terms); for example, do not add an "s" to make it plural. *Only follow this guidance if you are explicitly referring to the API object (for example, when editing an object in the CLI or viewing an object in the web console).*
@@ -1146,11 +1257,79 @@ An Operator's full name must be a proper noun, with each word initially
 capitalized. If it includes a product name, defer the product's capitalization
 style guidelines. For example:
 
-- Cluster Logging Operator
+- Red Hat OpenShift Logging Operator
 - Prometheus Operator
 - etcd Operator
 - Node Tuning Operator
 - Cluster Version Operator
+
+== Declarative config examples
+
+Many of our procedures provide imperative `oc` commands (which cannot be stored in a Git repo). Due to efforts around improving the experience for GitOps users, we sometimes also want to provide a declarative YAML example that achieves the same configuration. This allows users to store these YAML configurations in a Git repo and follow GitOps practices to configure OpenShift.
+
+[IMPORTANT]
+====
+When adding declarative examples to procedures, do not completely replace the imperative command with the declarative YAML example. Some users might still prefer the imperative option.
+====
+
+To add a declarative YAML example to a procedure step with an existing imperative command, add it in a "TIP" admonition by following the template in the example below. This example uses an imperative command (`oc create configmap`) to create a config map, and then provides the declarative YAML example of the `ConfigMap` object afterward.
+
+....
+* Define a `ConfigMap` object containing the certificate authority by using the following command:
++
+[source,terminal]
+----
+$ oc create configmap ca-config-map --from-file=ca.crt=/path/to/ca -n openshift-config
+----
++
+[TIP]
+====
+You can alternatively apply the following YAML to create the config map:
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ca-config-map
+  namespace: openshift-config
+type: Opaque
+data:
+  ca.crt: <base64_encoded_CA_certificate_PEM>
+----
+====
+....
+
+This renders as:
+
+> * Define a `ConfigMap` object containing the certificate authority by using the following command:
+> +
+> [source,terminal]
+> ----
+> $ oc create configmap ca-config-map --from-file=ca.crt=/path/to/ca -n openshift-config
+> ----
+> +
+> [TIP]
+> ====
+> You can alternatively apply the following YAML to create the config map:
+>
+> [source,yaml]
+> ----
+> apiVersion: v1
+> kind: ConfigMap
+> metadata:
+>   name: ca-config-map
+>   namespace: openshift-config
+> type: Opaque
+> data:
+>   ca.crt: <base64_encoded_CA_certificate_PEM>
+> ----
+> ====
+
+[NOTE]
+====
+If you are adding a particularly long YAML block, you can optionally use the xref:collapsible-content[`%collapsible`] feature to allow users to collapse the code block.
+====
 
 == Quick markup reference
 

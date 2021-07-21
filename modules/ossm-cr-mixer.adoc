@@ -21,7 +21,6 @@ mixer:
       cpu: 10m
       memory: 128Mi
       limits:
-
 ----
 
 
@@ -55,7 +54,7 @@ mixer:
 |===
 |Type |Parameter |Description |Values |Default
 
-|Requests
+|`requests`
 |`cpu`
 |The percentage of CPU resources requested for Mixer telemetry.
 |CPU resources in millicores based on your environment's configuration.
@@ -64,10 +63,10 @@ mixer:
 |
 |`memory`
 |The amount of memory requested for Mixer telemetry.
-|Available memory in bytes (for example, 200Ki, 50Mi, 5Gi) based on your environment’s configuration.
+|Available memory in bytes (for example, 200Ki, 50Mi, 5Gi) based on your environment's configuration.
 |`128Mi`
 
-|Limits
+|`limits`
 |`cpu`
 |The maximum percentage of CPU resources Mixer telemetry is permitted to use.
 |CPU resources in millicores based on your environment's configuration.
@@ -76,6 +75,6 @@ mixer:
 |
 |`memory`
 |The maximum amount of memory Mixer telemetry is permitted to use.
-|Available memory in bytes (for example, 200Ki, 50Mi, 5Gi) based on your environment’s configuration.
+|Available memory in bytes (for example, 200Ki, 50Mi, 5Gi) based on your environment's configuration.
 |`4G`
 |===

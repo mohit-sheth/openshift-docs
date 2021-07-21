@@ -1,22 +1,20 @@
 include::modules/serverless-document-attributes.adoc[]
 [id="serverless-cluster-admin-eventing"]
-= Creating Eventing components as a cluster administrator
+= Creating Eventing components in the Administrator perspective
 include::modules/common-attributes.adoc[]
 :context: serverless-cluster-admin-eventing
 
 toc::[]
 
-If you have cluster administrator permissions on a {product-title} cluster, you can create Knative Eventing components with {ServerlessProductName} in the *Administrator* perspective of the web console or by using the `kn` and `oc` CLIs.
+You can create Knative Eventing components with {ServerlessProductName} in the *Administrator* perspective of the web console.
 
 // Event sources
 include::modules/serverless-creating-event-source-admin-web-console.adoc[leveloffset=+1]
 
-See xref:../../serverless/event_sources/knative-event-sources.adoc#knative-event-sources[Getting started with event sources] for more information on which event source types are supported and can be created using by {ServerlessProductName}.
+See xref:../../serverless/event_sources/knative-event-sources.adoc#knative-event-sources[Understanding event sources] for more information on which event source types are supported and can be created using by {ServerlessProductName}.
 
 // Brokers
 include::modules/serverless-creating-broker-admin-web-console.adoc[leveloffset=+1]
-include::modules/serverless-creating-broker-admin.adoc[leveloffset=+1]
-include::modules/serverless-deleting-broker-admin.adoc[leveloffset=+1]
 // Trigger
 include::modules/serverless-creating-trigger-admin-web-console.adoc[leveloffset=+1]
 // Channel
@@ -24,10 +22,11 @@ include::modules/serverless-creating-channel-admin-web-console.adoc[leveloffset=
 // Subscription
 include::modules/serverless-creating-subscription-admin-web-console.adoc[leveloffset=+1]
 
-[id="serverless-cluster-admin-eventing-additional-resources"]
+[id="additional-resources_serverless-cluster-admin-eventing"]
 == Additional resources
 
-* See xref:../../serverless/event_workflows/serverless-using-brokers.adoc#serverless-using-brokers[Event delivery workflows using brokers and triggers].
-* See xref:../../serverless/event_workflows/serverless-channels.adoc#serverless-channels[Event delivery workflows using channels].
-* For information about using Apache Kafka components, see xref:../../serverless/serverless-kafka.adoc#serverless-kafka[
-Using Apache Kafka with {ServerlessProductName}].
+* See xref:../../serverless/knative_eventing/serverless-using-brokers.adoc#serverless-using-brokers[Brokers].
+* See xref:../../serverless/channels/serverless-subs.adoc#serverless-subs[Subscriptions].
+* See xref:../../serverless/knative_eventing/serverless-triggers.adoc#serverless-triggers[Triggers].
+* See xref:../../serverless/channels/serverless-channels.adoc#serverless-channels[Channels].
+* See xref:../../serverless/knative_eventing/serverless-kafka.adoc#serverless-kafka[Knative Kafka].

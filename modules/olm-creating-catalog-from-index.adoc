@@ -2,12 +2,9 @@
 //
 // * operators/admin/olm-restricted-networks.adoc
 // * operators/admin/managing-custom-catalogs.adoc
-// * migration/migrating_3_4/deploying-cam-3-4.adoc
-// * migration/migrating_4_1_4/deploying-cam-4-1-4.adoc
-// * migration/migrating_4_2_4/deploying-cam-4-2-4.adoc
 
 ifdef::openshift-origin[]
-:index-image: upstream-community-operators
+:index-image: catalog
 :tag: latest
 endif::[]
 ifndef::openshift-origin[]

@@ -3,7 +3,7 @@
 // * nodes/nodes-nodes-resources-configuring.adoc
 
 [id="nodes-nodes-resources-configuring-setting_{context}"]
-= Configuring allocated resources for nodes
+= Manually allocating resources for nodes
 
 {product-title} supports the CPU and memory resource types for allocation. The `ephemeral-resource` resource type is supported as well. For the `cpu` type, the resource quantity is specified in units of cores, such as `200m`, `0.5`, or `1`. For `memory` and `ephemeral-storage`, it is specified in units of bytes, such as `200Ki`, `50Mi`, or `5Gi`.
 
@@ -98,6 +98,21 @@ metadata:
 ----
 $ oc label machineconfigpool worker custom-kubelet=small-pods
 ----
++
+[TIP]
+====
+You can alternatively apply the following YAML to add the label:
+
+[source,yaml]
+----
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  labels:
+    custom-kubelet: small-pods
+  name: worker
+----
+====
 
 .Procedure
 
@@ -115,9 +130,10 @@ spec:
     matchLabels:
       custom-kubelet: small-pods <2>
   kubeletConfig:
-    systemReserved:
+    systemReserved: <3>
       cpu: 1000m
       memory: 1Gi
 ----
 <1> Assign a name to CR.
 <2> Specify the label from the Machine Config Pool.
+<3> Specify the resources to reserve for the node components and system components.

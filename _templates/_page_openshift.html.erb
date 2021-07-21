@@ -83,7 +83,7 @@
         <%= breadcrumb_topic %>
       </li>
 
-      <% if (distro_key != "openshift-origin") %>
+      <% if (distro_key != "openshift-origin" && distro_key != "openshift-aro") %>
       <span text-align="right" style="float: right !important">
         <a href="https://github.com/openshift/openshift-docs/commits/enterprise-<%= (distro_key == "openshift-enterprise") ? version : ((distro_key == "openshift-dedicated") ? ((version == "4") ? "4.3" : "3.11") : "3.11") %>/<%= repo_path %>">
           Page history
@@ -96,6 +96,14 @@
           ((distro_key == "openshift-dedicated") ? "[dedicated] Issue in file #{repo_path}" : "[online] Issue in file #{repo_path}") %>">
           Open an issue
         </a>
+        <% if (version == "4.5") %>
+        /
+        <select onchange="selectLang(this);">
+          <option value="en-us">English</option>
+          <option value="zh-cn">简体中文</option>
+          <option value="ja-jp">日本語</option>
+        </select>
+        <% end %>
         <% end %>
       </span>
       <% end %>
@@ -188,7 +196,8 @@
     'openshift-dedicated': ['docs_dedicated', version],
     'openshift-online': ['docs_online', version],
     'openshift-enterprise': ['docs_cp', version],
-    'openshift-aro' : ['docs_aro']
+    'openshift-aro' : ['docs_aro', version],
+    'openshift-rosa' : ['docs_rosa']
   };
 
   distros[dk] ? hcSearchCategory.apply(null, distros[dk]) : hcSearchCategory("docs");

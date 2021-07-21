@@ -5,7 +5,7 @@
 [id="manually-rotate-service-ca_{context}"]
 = Manually rotate the service CA certificate
 
-The service CA is valid for 26 months and is automatically refreshed when there is less than six months validity left.
+The service CA is valid for 26 months and is automatically refreshed when there is less than 13 months validity left.
 
 If necessary, you can manually refresh the service CA by using the following procedure.
 
@@ -27,7 +27,7 @@ using the following command.
 ----
 $ oc get secrets/signing-key -n openshift-service-ca \
      -o template='{{index .data "tls.crt"}}' \
-     | base64 -d \
+     | base64 --decode \
      | openssl x509 -noout -enddate
 ----
 

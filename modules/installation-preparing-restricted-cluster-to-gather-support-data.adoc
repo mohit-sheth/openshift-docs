@@ -1,15 +1,31 @@
 // Module included in the following assemblies:
 //
-// * installing/install_config/installing-restricted-networks-preparations.adoc
+// * post_installation_configuration/cluster-tasks.adoc
 
 [id="installation-preparing-restricted-cluster-to-gather-support-data_{context}"]
 = Preparing your cluster to gather support data
 
-Clusters using a restricted network must import the default must-gather image in order to gather debugging data for Red Hat support. The must-gather image is not imported by default, and clusters on a restricted network do not have access to the internet to pull the latest image from a remote repository.
+Clusters using a restricted network must import the default must-gather image to gather debugging data for Red Hat support. The must-gather image is not imported by default, and clusters on a restricted network do not have access to the internet to pull the latest image from a remote repository.
 
 .Procedure
 
-* Import the default must-gather image from your installation payload:
+. If you have not added your mirror registry's trusted CA to your cluster's image configuration object as part of the Cluster Samples Operator configuration, perform the following steps:
+.. Create the cluster's image configuration object:
++
+[source,terminal]
+----
+$ oc create configmap registry-config --from-file=${MIRROR_ADDR_HOSTNAME}..5000=$path/ca.crt -n openshift-config
+----
+
+.. Add the required trusted CAs for the mirror in the cluster's image
+configuration object:
++
+[source,terminal]
+----
+$ oc patch image.config.openshift.io/cluster --patch '{"spec":{"additionalTrustedCA":{"name":"registry-config"}}}' --type=merge
+----
+
+. Import the default must-gather image from your installation payload:
 +
 [source,terminal]
 ----

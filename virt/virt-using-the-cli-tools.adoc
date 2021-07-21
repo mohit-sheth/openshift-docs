@@ -2,6 +2,7 @@
 = Using the CLI tools
 include::modules/virt-document-attributes.adoc[]
 :context: virt-using-the-cli-tools
+
 toc::[]
 
 The two primary CLI tools used for managing resources in the cluster are:
@@ -17,4 +18,4 @@ include::modules/virt-virtctl-commands.adoc[leveloffset=+1]
 include::modules/virt-openshift-client-commands.adoc[leveloffset=+1]
 
 For more comprehensive information on `oc` client commands, see the
-xref:../cli_reference/openshift_cli/developer-cli-commands.adoc#cli_reference[{product-title} CLI tools] documentation.
+xref:../cli_reference/openshift_cli/developer-cli-commands.adoc#cli-developer-commands[{product-title} CLI tools] documentation.

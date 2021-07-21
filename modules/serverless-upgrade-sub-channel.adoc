@@ -10,7 +10,7 @@
 +
 [NOTE]
 ====
-If you have selected Manual updates, you will need to complete additional steps after updating the channel as described in this guide. The Subscription’s upgrade status will remain *Upgrading* until you review and approve its Install Plan. Information about the Install Plan can be found in the {product-title} Operators documentation.
+If you have selected Manual updates, you will need to complete additional steps after updating the channel as described in this guide. The Subscription's upgrade status will remain *Upgrading* until you review and approve its Install Plan. Information about the Install Plan can be found in the {product-title} Operators documentation.
 ====
 * You have logged in to the {product-title} web console.
 
@@ -20,7 +20,7 @@ If you have selected Manual updates, you will need to complete additional steps 
 . Navigate to the *Operators* -> *Installed Operators* page.
 . Select the *{ServerlessOperatorName} Operator*.
 . Click *Subscription* -> *Channel*.
-. In the *Change Subscription Update Channel* window, select *4.6*, and then click *Save*.
+. In the *Change Subscription Update Channel* window, select *stable*, and then click *Save*.
 . Wait until all pods have been upgraded in the `knative-serving` namespace and the `KnativeServing` custom resource reports the latest Knative Serving version.
 
 .Verification

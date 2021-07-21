@@ -1,13 +1,10 @@
 // Module included in the following assemblies:
 //
 // * operators/admin/olm-restricted-networks.adoc
-// * migration/migrating_3_4/deploying-cam-3-4.adoc
-// * migration/migrating_4_1_4/deploying-cam-4-1-4.adoc
-// * migration/migrating_4_2_4/deploying-cam-4-2-4.adoc
 
 ifdef::openshift-origin[]
-:index-image-pullspec: quay.io/operator-framework/upstream-community-operators:latest
-:index-image: upstream-community-operators
+:index-image-pullspec: quay.io/operatorhubio/catalog:latest
+:index-image: catalog
 :example-registry: example.com
 endif::[]
 ifndef::openshift-origin[]
@@ -76,7 +73,7 @@ $ oc adm catalog mirror \
 <2> Specify the target registry and namespace to mirror the Operator content to, where `<namespace>` is any existing namespace on the registry. For example, you might create an `olm-mirror` namespace to push all mirrored content to.
 <3> Optional: If required, specify the location of your registry credentials file.
 <4> Optional: If you do not want to configure trust for the target registry, add the `--insecure` flag.
-<5> Optional: Specify which platform and architecture of the index image to select when multiple variants are available. Images are passed as `'<platform>/<arch>[/<variant>]'`. This does not apply to images referenced by the index. Valid values are `linux/amd64`, `linux/ppc64le`, and `linux/s390x`.
+<5> Optional: Specify which platform and architecture of the index image to select when multiple variants are available. Images are passed as `'<platform>/<arch>[/<variant>]'`. This does not apply to images referenced by the index. Valid values are `linux/amd64`, `linux/ppc64le`, `linux/s390x`, and `.*`
 <6> Optional: Generate only the manifests required for mirroring, and do not actually mirror the image content to a registry. This option can be useful for reviewing what will be mirrored, and it allows you to make any changes to the mapping list if you require only a subset of packages. You can then use the `mapping.txt` file with the `oc image mirror` command to mirror the modified list of images in a later step. This flag is intended for only advanced selective mirroring of content from the catalog; the `opm index prune` command, if you used it previously to prune the index image, is suitable for most catalog management use cases.
 +
 .Example output
@@ -101,7 +98,8 @@ $ oc adm catalog mirror \
     <index_image> \//<1>
     file:///local/index \//<2>
     [-a ${REG_CREDS}] \
-    [--insecure]
+    [--insecure] \
+    [--index-filter-by-os='<platform>/<arch>']
 ----
 <1> Specify the index image for the catalog you want to mirror. For example, this might be a pruned index image that you created previously, or one of the source index images for the default catalogs, such as `{index-image-pullspec}`.
 <2> Mirrors content to local files in your current directory.
@@ -139,7 +137,8 @@ $ oc adm catalog mirror \
     file://local/index/<repo>/<index_image>:<tag> \//<1>
     <mirror_registry>:<port>/<namespace> \//<2>
     [-a ${REG_CREDS}] \
-    [--insecure]
+    [--insecure] \
+    [--index-filter-by-os='<platform>/<arch>']
 ----
 <1> Specify the `file://` path from the previous command output.
 <2> Specify the target registry and namespace to mirror the Operator content to, where `<namespace>` is any existing namespace on the registry. For example, you might create an `olm-mirror` namespace to push all mirrored content to.
@@ -175,11 +174,16 @@ The manifests directory contains the following files, some of which might requir
 If you mirrored the content to local files, you must modify your `catalogSource.yaml` file to remove any backslash (`/`) characters from the `metadata.name` field. Otherwise, when you attempt to create the object, it fails with an "invalid resource name" error.
 ====
 * The `imageContentSourcePolicy.yaml` file defines an `ImageContentSourcePolicy` object that can configure nodes to translate between the image references stored in Operator manifests and the mirrored registry.
++
+[NOTE]
+====
+If your cluster uses an `ImageContentSourcePolicy` object to configure repository mirroring, you can use only global pull secrets for mirrored registries. You cannot add a pull secret to a project.
+====
 * The `mapping.txt` file contains all of the source images and where to map them in the target registry. This file is compatible with the `oc image mirror` command and can be used to further customize the mirroring configuration.
 +
 [IMPORTANT]
 ====
-If you used the `--manifests-only` flag during the mirroring process and want to further trim the subset of packages to be mirrored, see the steps in the "Mirroring a Package Manifest Format catalog image" procedure about modifying your `mapping.txt` file and using the file with the `oc image mirror` command. After following those further actions, you can continue this procedure.
+If you used the `--manifests-only` flag during the mirroring process and want to further trim the subset of packages to be mirrored, see the steps in the link:https://docs.openshift.com/container-platform/4.7/operators/admin/olm-managing-custom-catalogs.html#olm-mirroring-package-manifest-catalog_olm-managing-custom-catalogs[Mirroring a package manifest format catalog image] procedure of the {product-title} 4.7 documentation about modifying your `mapping.txt` file and using the file with the `oc image mirror` command. After following those further actions, you can continue this procedure.
 ====
 --
 
@@ -191,6 +195,7 @@ $ oc create -f <path/to/manifests/dir>/imageContentSourcePolicy.yaml
 ----
 +
 where `<path/to/manifests/dir>` is the path to the manifests directory for your mirrored content.
+
 
 You can now create a `CatalogSource` object to reference your mirrored index image and Operator content.
 

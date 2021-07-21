@@ -2,6 +2,7 @@
 = Accessing virtual machine consoles
 include::modules/virt-document-attributes.adoc[]
 :context: virt-accessing-vm-consoles
+
 toc::[]
 
 {VirtProductName} provides different virtual machine consoles that you can
@@ -25,6 +26,8 @@ include::modules/virt-vm-rdp-console-web.adoc[leveloffset=+2]
 == Accessing virtual machine consoles by using CLI commands
 
 include::modules/virt-accessing-vmi-ssh.adoc[leveloffset=+2]
+
+include::modules/virt-accessing-vm-yaml-ssh.adoc[leveloffset=+2]
 
 include::modules/virt-accessing-serial-console.adoc[leveloffset=+2]
 

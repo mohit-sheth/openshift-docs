@@ -1,6 +1,6 @@
 // Module included in the following assemblies:
 //
-// * machine_management/user_provisioned/adding-rhel-compute.adoc
+// * machine_management/adding-rhel-compute.adoc
 // * post_installation_configuration/node-tasks.adoc
 
 [id="rhel-preparing-playbook-machine_{context}"]
@@ -63,7 +63,7 @@ If you use SSH key-based authentication, you must manage the key with an SSH age
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
     --enable="rhel-7-server-ansible-2.9-rpms" \
-    --enable="rhel-7-server-ose-4.7-rpms"
+    --enable="rhel-7-server-ose-4.8-rpms"
 ----
 
 . Install the required packages, including `openshift-ansible`:

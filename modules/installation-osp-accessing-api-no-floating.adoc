@@ -20,6 +20,13 @@ ifeval::["{context}" == "installing-openstack-user-kuryr"]
 :osp-kuryr:
 :osp-upi:
 endif::[]
+ifeval::["{context}" == "installing-openstack-user-sr-iov"]
+:osp-upi:
+endif::[]
+ifeval::["{context}" == "installing-openstack-user-sr-iov-kuryr"]
+:osp-upi:
+:osp-kuryr:
+endif::[]
 ifeval::["{context}" == "installing-openstack-installer-restricted"]
 :osp-ipi:
 :osp-restricted:
@@ -39,7 +46,7 @@ ifdef::osp-upi[variables:]
 
 ifdef::osp-ipi[]
 * `platform.openstack.ingressFloatingIP`
-* `platform.openstack.lbFloatingIP`
+* `platform.openstack.apiFloatingIP`
 
 If you cannot provide an external network, you can also leave `platform.openstack.externalNetwork` blank. If you do not provide a value for `platform.openstack.externalNetwork`, a router is not created for you, and, without additional action, the installer will fail to retrieve an image from Glance. You must configure external connectivity on your own.
 endif::osp-ipi[]
@@ -82,6 +89,13 @@ endif::[]
 ifeval::["{context}" == "installing-openstack-user-kuryr"]
 :!osp-kuryr:
 :!osp-upi:
+endif::[]
+ifeval::["{context}" == "installing-openstack-user-sr-iov"]
+:!osp-upi:
+endif::[]
+ifeval::["{context}" == "installing-openstack-user-sr-iov-kuryr"]
+:!osp-upi:
+:!osp-kuryr:
 endif::[]
 ifeval::["{context}" == "installing-openstack-installer-restricted"]
 :!osp-ipi:

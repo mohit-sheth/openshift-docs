@@ -7,11 +7,16 @@
 // * installing/installing_bare_metal/installing-bare-metal.adoc
 // * installing/installing_aws/installing-restricted-networks-aws.adoc
 // * installing/installing_bare_metal/installing-restricted-networks-bare-metal.adoc
+// * installing/installing_vmc/installing-restricted-networks-vmc-user-infra.adoc
+// * installing/installing_vmc/installing-vmc-user-infra.adoc
+// * installing/installing_vmc/installing-vmc-network-customizations-user-infra.adoc
 // * installing/installing_vsphere/installing-restricted-networks-vsphere.adoc
 // * installing/installing_vsphere/installing-vsphere.adoc
+// * installing/installing_vsphere/installing-vsphere-network-customizations.adoc
 // * installing/installing_ibm_z/installing-ibm-z.adoc
-// * machine_management/user_provisioned/adding-rhel-compute.adoc
-// * machine_management/user_provisioned/more-rhel-compute.adoc
+// * machine_management/adding-rhel-compute.adoc
+// * machine_management/more-rhel-compute.adoc
+// * machine_management/user_provisioned/adding-aws-compute-user-infra.adoc
 // * machine_management/user_provisioned/adding-bare-metal-compute-user-infra.adoc
 // * machine_management/user_provisioned/adding-vsphere-compute-user-infra.adoc
 // * post_installation_configuration/node-tasks.adoc
@@ -50,11 +55,11 @@ $ oc get nodes
 [source,terminal]
 ----
 NAME      STATUS    ROLES   AGE  VERSION
-master-0  Ready     master  63m  v1.20.0
-master-1  Ready     master  63m  v1.20.0
-master-2  Ready     master  64m  v1.20.0
-worker-0  NotReady  worker  76s  v1.20.0
-worker-1  NotReady  worker  70s  v1.20.0
+master-0  Ready     master  63m  v1.21.0
+master-1  Ready     master  63m  v1.21.0
+master-2  Ready     master  64m  v1.21.0
+worker-0  NotReady  worker  76s  v1.21.0
+worker-1  NotReady  worker  70s  v1.21.0
 ----
 +
 The output lists all of the machines that you created.
@@ -102,7 +107,7 @@ endif::ibm-z,ibm-z-kvm[]
 +
 [NOTE]
 ====
-Because the CSRs rotate automatically, approve your CSRs within an hour of adding the machines to the cluster. If you do not approve them within an hour, the certificates will rotate, and more than two certificates will be present for each node. You must approve all of these certificates. After you approve the initial CSRs, the subsequent node client CSRs are automatically approved by the cluster `kube-controller-manager`.
+Because the CSRs rotate automatically, approve your CSRs within an hour of adding the machines to the cluster. If you do not approve them within an hour, the certificates will rotate, and more than two certificates will be present for each node. You must approve all of these certificates. Once the client CSR is approved, the Kubelet creates a secondary CSR for the serving certificate, which requires manual approval. Then, subsequent serving certificate renewal requests are automatically approved by the `machine-approver` if the Kubelet requests a new certificate with identical parameters.
 ====
 +
 [NOTE]
@@ -174,11 +179,11 @@ $ oc get nodes
 [source,terminal]
 ----
 NAME      STATUS    ROLES   AGE  VERSION
-master-0  Ready     master  73m  v1.20.0
-master-1  Ready     master  73m  v1.20.0
-master-2  Ready     master  74m  v1.20.0
-worker-0  Ready     worker  11m  v1.20.0
-worker-1  Ready     worker  11m  v1.20.0
+master-0  Ready     master  73m  v1.21.0
+master-1  Ready     master  73m  v1.21.0
+master-2  Ready     master  74m  v1.21.0
+worker-0  Ready     worker  11m  v1.21.0
+worker-1  Ready     worker  11m  v1.21.0
 ----
 +
 [NOTE]

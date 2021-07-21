@@ -21,17 +21,12 @@ link:https://access.redhat.com/articles/4207611[guidelines for deploying {produc
 
 == Prerequisites
 
+* You reviewed details about the xref:../../architecture/architecture-installation.adoc#architecture-installation[{product-title} installation and update] processes.
+* You read the documentation on xref:../../installing/installing-preparing.adoc#installing-preparing[selecting a cluster installation method and preparing it for users].
 * Before you begin the installation process, you must clean the installation directory. This ensures that the required installation files are created and updated during the installation process.
-
-* Provision
-xref:../../storage/persistent_storage/persistent-storage-nfs.adoc#persistent-storage-nfs[persistent storage using NFS]
-for your cluster. To deploy a private image registry, your storage must provide
+* You provisioned xref:../../storage/persistent_storage/persistent-storage-nfs.adoc#persistent-storage-nfs[persistent storage using NFS] for your cluster. To deploy a private image registry, your storage must provide
 `ReadWriteMany` access modes.
-* Review details about the
-xref:../../architecture/architecture-installation.adoc#architecture-installation[{product-title} installation and update]
-processes.
-* If you use a firewall, you must
-xref:../../installing/install_config/configuring-firewall.adoc#configuring-firewall[configure it to allow the sites] that your cluster requires access to.
+* If you use a firewall, you xref:../../installing/install_config/configuring-firewall.adoc#configuring-firewall[configured it to allow the sites] that your cluster requires access to.
 
 [NOTE]
 ====
@@ -48,8 +43,6 @@ include::modules/installation-requirements-user-infra.adoc[leveloffset=+1]
 
 * See link:http://public.dhe.ibm.com/software/dw/linux390/perf/zvm_hpav00.pdf[Scaling HyperPAV alias devices on Linux guests on z/VM] for performance optimization.
 
-include::modules/installation-infrastructure-user-infra.adoc[leveloffset=+1]
-
 include::modules/installation-network-user-infra.adoc[leveloffset=+2]
 
 .Additional resources
@@ -57,6 +50,12 @@ include::modules/installation-network-user-infra.adoc[leveloffset=+2]
 * xref:../install_config/installing-customizing.adoc#installation-special-config-chrony_installing-customizing[Configuring chrony time service]
 
 include::modules/installation-dns-user-infra.adoc[leveloffset=+2]
+
+include::modules/installation-load-balancing-user-infra.adoc[leveloffset=+2]
+
+include::modules/installation-infrastructure-user-infra.adoc[leveloffset=+1]
+
+include::modules/installation-user-provisioned-validating-dns.adoc[leveloffset=+1]
 
 include::modules/ssh-agent-using.adoc[leveloffset=+1]
 
@@ -68,7 +67,9 @@ include::modules/installation-initializing-manual.adoc[leveloffset=+1]
 
 include::modules/installation-bare-metal-config-yaml.adoc[leveloffset=+2]
 
-include::modules/installation-configure-proxy.adoc[leveloffset=+1]
+include::modules/installation-configure-proxy.adoc[leveloffset=+2]
+
+include::modules/installation-three-node-cluster.adoc[leveloffset=+2]
 
 include::modules/installation-user-infra-generate-k8s-manifest-ignition.adoc[leveloffset=+1]
 
@@ -94,9 +95,11 @@ include::modules/installation-ibm-z-troubleshooting-and-debugging.adoc[leveloffs
 
 .Additional resources
 
-* See also link:https://access.redhat.com/solutions/4387261[How to generate SOSREPORT within OpenShift4 nodes without SSH].
+* link:https://access.redhat.com/solutions/4387261[How to generate SOSREPORT within OpenShift4 nodes without SSH].
 
 == Next steps
+
+* xref:../../post_installation_configuration/machine-configuration-tasks.adoc#rhcos-enabling-multipath_post-install-machine-configuration-tasks[Enabling multipathing with kernel arguments on {op-system}].
 
 * xref:../../post_installation_configuration/cluster-tasks.adoc#available_cluster_customizations[Customize your cluster].
 

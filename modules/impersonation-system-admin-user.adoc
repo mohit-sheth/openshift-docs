@@ -3,7 +3,7 @@
 // * users_and_roles/impersonating-system-admin.adoc
 
 [id="impersonation-system-admin-user_{context}"]
-= Impersonating the `system:admin` user
+= Impersonating the system:admin user
 
 You can grant a user permission to impersonate `system:admin`, which grants them
 cluster administrator permissions.
@@ -16,3 +16,24 @@ cluster administrator permissions.
 ----
 $ oc create clusterrolebinding <any_valid_name> --clusterrole=sudoer --user=<username>
 ----
++
+[TIP]
+====
+You can alternatively apply the following YAML to grant permission to impersonate `system:admin`:
+
+[source,yaml]
+----
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: <any_valid_name>
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: sudoer
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: <username>
+----
+====

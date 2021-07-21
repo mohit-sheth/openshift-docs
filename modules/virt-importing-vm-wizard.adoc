@@ -15,7 +15,7 @@ You can also import a VM template. If you import a VM template, {VirtProductName
 
 * You must have admin user privileges.
 * The VMware Virtual Disk Development Kit (VDDK) image must be in an image registry that is accessible to your {VirtProductName} environment.
-* The VDDK image must be added to the `v2v-vmware` config map.
+* The VDDK image must be added to the `spec.vddkInitImage` field of the `HyperConverged` custom resource (CR).
 * The VM must be powered off.
 * Virtual disks must be connected to IDE or SCSI controllers. If virtual disks are connected to a SATA controller, you can change them to IDE controllers and then migrate the VM.
 * The {VirtProductName} local and shared persistent storage classes must support VM import.
@@ -75,7 +75,7 @@ $ openssl s_client -connect <RHV_Manager_FQDN>:443 -showcerts < /dev/null
 +
 The CA certificate is the second certificate in the output.
 
-** *Username*: RHV Manager user name, for example, `admin@internal`
+** *Username*: RHV Manager user name, for example, `ocpadmin@internal`
 ** *Password*: RHV Manager password
 
 * If you select a saved RHV instance, the wizard connects to the RHV instance using the saved credentials.
@@ -101,13 +101,13 @@ endif::[]
 ifdef::virt-importing-rhv-vm[]
 * *General* -> *Name*: The VM name is limited to 63 characters.
 * *General* -> *Description*: Optional description of the VM.
-* *Storage*:
 ** *Storage Class*: Select *NFS* or *ocs-storagecluster-ceph-rbd*.
 +
 If you select *ocs-storagecluster-ceph-rbd*, you must set the *Volume Mode* of the disk to *Block*.
 
 ** *Advanced* -> *Volume Mode*: Select *Block*.
-* *Networking* -> *Network*: You can select a network from a list of available `NetworkAttachmentDefinition` objects.
+* *Advanced* -> *Volume Mode*: Select *Block*.
+* *Networking* -> *Network*: You can select a network from a list of available network attachment definition objects.
 endif::[]
 ifdef::virt-importing-vmware-vm[]
 * *General*:

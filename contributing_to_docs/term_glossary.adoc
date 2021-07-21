@@ -103,11 +103,21 @@ action. It consists of _identity_ and _action_.
 ''''
 === build
 
-General usage: build(s)
+Usage: build(s), or when speaking generally about `Build` objects.
 
-A build is the process of transforming input parameters into a resulting object.
+* A build is the process of transforming input parameters into a resulting object.
+* A `Build` object encapsulates the inputs needed to produce a new deployable image, as well as the status of the execution and a reference to the pod that executed the build.
 
-When referencing the actual object, write as `Build`. See link:doc_guidelines.adoc#api-object-formatting[API object formatting] for more details.
+When referencing the actual object, write as "``Build`` object" as appropriate. See link:doc_guidelines.adoc#api-object-formatting[API object formatting] for more details.
+
+''''
+=== build configuration
+
+Usage: build configuration(s) when speaking generally about `BuildConfig` objects.
+
+A `BuildConfig` object is the definition of the entire build process. A build configuration describes a single build definition and a set of triggers for when a new build is created.
+
+When referencing the actual object, write as "``BuildConfig`` object" as appropriate. See link:doc_guidelines.adoc#api-object-formatting[API object formatting] for more details.
 
 == C
 
@@ -203,7 +213,7 @@ link:doc_guidelines.adoc[Documentation Guidelines] for markup information.
 
 Docker can build images automatically by reading the instructions from a
 Dockerfile. A Dockerfile is a text document that contains all the commands you
-would normally execute manually in order to build a docker image.
+would normally execute manually to build a docker image.
 
 Source: https://docs.docker.com/reference/builder/
 
@@ -276,7 +286,7 @@ Usage: Ignition config file or Ignition config files
 
 The file that Ignition uses to configure Red Hat Enterprise Linux CoreOS (RHCOS) during
 operating system initialization. The installation program generates different
-Ignition config files to initialize bootstrap, master, and worker nodes.
+Ignition config files to initialize bootstrap, control plane, and worker nodes.
 
 ''''
 
@@ -289,7 +299,7 @@ load balancing and proxy layer via a public DNS entry. The Ingress resource may
 further specify TLS options and a certificate, or specify a public CNAME that
 the OpenShift Ingress Controller should also accept for HTTP and HTTPS traffic.
 An administrator typically configures their Ingress Controller to be visible
-outside the cluster firewall, and may also add additional security, caching, or
+outside the cluster firewall, and might also add additional security, caching, or
 traffic controls on the service content.
 
 ''''
@@ -322,17 +332,16 @@ Usage: kubelet(s)
 
 The agent that controls a Kubernetes node.  Each node runs a kubelet, which
 handles starting and stopping containers on a node, based on the desired state
-defined by the master.
+defined by the control plane (also known as master).
 
 ''''
-=== Kubernetes master
+=== Kubernetes control plane
 
-Usage: Kubernetes master(s)
+Usage: Kubernetes control plane
 
-The Kubernetes-native equivalent to the link:#project[OpenShift master].
-An OpenShift system runs OpenShift masters, not Kubernetes masters, and
-an OpenShift master provides a superset of the functionality of a Kubernetes
-master, so it is generally preferred to use the term OpenShift master.
+The Kubernetes-native equivalent to the link:#project[OpenShift control plane].
+An OpenShift system runs OpenShift control planes (also known as masters), not Kubernetes control planes, and
+an OpenShift control plane provides a superset of the functionality of a Kubernetes control plane, so it is generally preferred to use the term OpenShift control plane.
 
 ''''
 === Kubernetes API server
@@ -342,6 +351,15 @@ Usage: Kubernetes API server
 == L
 
 == M
+
+''''
+=== MetalLB
+
+Usage: MetalLB, MetalLB Operator, MetalLB project
+
+MetalLB is an open source project that provides a way to add services of type `LoadBalancer` to clusters that are not installed on infrastructure from a cloud provider. MetalLB primarily targets on-premise, bare-metal clusters, but any infrastructure that does not include a native load-balancing capability is a candidate.
+
+"MetalLB" always has the first letter and last two letters capitalized in general text. Do not use "Metallb."
 
 ''''
 === minion
@@ -405,16 +423,16 @@ When referencing as a prerequisite for a procedure module, use the following
 construction: Install the OpenShift CLI (`oc`).
 
 ''''
-=== OpenShift master
+=== OpenShift control plane (also known as master)
 
-Usage: OpenShift master(s)
+Usage: OpenShift control plane
 
 Provides a REST endpoint for interacting with the system and manages the state
 of the system, ensuring that all containers expected to be running are actually
 running and that other requests such as builds and deployments are serviced.
 New deployments and configurations are created with the REST API, and the state
 of the system can be interrogated through this endpoint as well.  An OpenShift
-master comprises the API server, scheduler, and SkyDNS.
+control plane comprises the API server, scheduler, and SkyDNS.
 
 ''''
 === Operator
@@ -445,6 +463,17 @@ more on Operator naming.
 === OperatorHub
 
 Usage: OperatorHub
+
+''''
+=== Operator Lifecycle Manager (OLM)
+Usage: Operator Lifecycle Manager, OLM
+
+Refer to this component without a preceding article ("the").
+
+.Examples of correct usage
+====
+You can use OpenShift Lifecycle Manager (OLM) to manually or automatically upgrade an Operator.
+====
 
 ''''
 === Options menu
@@ -527,10 +556,10 @@ Usage: route(s)
 
 OpenShift-specific API object that allows developers to expose services through
 an HTTP(S) aware load balancing and proxy layer via a public DNS entry. The
-route may further specify TLS options and a certificate, or specify a public
+route might further specify TLS options and a certificate, or specify a public
 CNAME that the OpenShift Ingress Controller should also accept for HTTP and
 HTTPS traffic. An administrator typically configures their Ingress Controller to
-be visible outside the cluster firewall, and may also add additional security,
+be visible outside the cluster firewall, and might also add additional security,
 caching, or traffic controls on the service content.
 
 == S
@@ -540,7 +569,7 @@ caching, or traffic controls on the service content.
 
 Usage: scheduler(s)
 
-Component of the Kubernetes master or OpenShift master that manages the state of
+Component of the Kubernetes control plane or OpenShift control plane that manages the state of
 the system, places pods on nodes, and ensures that all containers that are
 expected to be running are actually running.
 
@@ -570,7 +599,7 @@ This is commonly abbreviated as SCC.
 Usage: service(s)
 
 Kubernetes native API object that serves as an internal load balancer. It
-identifies a set of replicated pods in order to proxy the connections it
+identifies a set of replicated pods to proxy the connections it
 receives to them. Backing pods can be added to or removed from a service
 arbitrarily while the service remains consistently available, enabling anything
 that depends on the service to refer to it at a consistent address.
@@ -599,7 +628,7 @@ A service account binds together:
 
 Usage: SkyDNS
 
-Component of the Kubernetes master or OpenShift master that provides
+Component of the Kubernetes control plane or OpenShift control plane that provides
 cluster-wide DNS resolution of internal host names for services and pods.
 
 ''''

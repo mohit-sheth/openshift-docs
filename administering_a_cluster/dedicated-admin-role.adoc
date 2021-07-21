@@ -2,6 +2,7 @@
 = The dedicated-admin role
 include::modules/common-attributes.adoc[]
 :context: dedicated-administrator
+
 toc::[]
 
 As an administrator of an {product-title} cluster, your account has additional
@@ -43,7 +44,7 @@ Privileged and custom Operators cannot be installed.
 ====
 
 Administrators can only install Operators to the default `openshift-operators`
-namespace, except for the Cluster Logging Operator, which requires the
+namespace, except for the Red Hat OpenShift Logging Operator, which requires the
 `openshift-logging` namespace.
 
 .Additional resources

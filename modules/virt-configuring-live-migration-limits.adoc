@@ -6,37 +6,37 @@
 [id="virt-configuring-live-migration-limits_{context}"]
 = Configuring live migration limits and timeouts
 
-Configure live migration limits and timeouts for the cluster by adding updated
-key:value fields to the `kubevirt-config` configuration file, which is located in the
+Configure live migration limits and timeouts for the cluster by updating the `HyperConverged` custom resource (CR), which is located in the
 `openshift-cnv` namespace.
 
 .Procedure
 
-* Edit the `kubevirt-config` configuration file and add the necessary
-live migration parameters. The following example shows the default values:
+* Edit the `HyperConverged` CR and add the necessary live migration parameters.
 +
-
 [source,terminal]
 ----
-$ oc edit configmap kubevirt-config -n openshift-cnv
+$ oc edit hco -n openshift-cnv kubevirt-hyperconverged
 ----
 +
-
+.Example configuration file
 [source,yaml]
 ----
-apiVersion: v1
-kind: ConfigMap
+apiVersion: hco.kubevirt.io/v1beta1
+kind: HyperConverged
 metadata:
-  name: kubevirt-config
-  namespace: kubevirt
-  labels:
-    kubevirt.io: ""
-data:
-  feature-gates: "LiveMigration"
-  migrations: |-
-    parallelMigrationsPerCluster: 5
-    parallelOutboundMigrationsPerNode: 2
+  name: kubevirt-hyperconverged
+  namespace: openshift-cnv
+spec:
+  liveMigrationConfig: <1>
     bandwidthPerMigration: 64Mi
     completionTimeoutPerGiB: 800
+    parallelMigrationsPerCluster: 5
+    parallelOutboundMigrationsPerNode: 2
     progressTimeout: 150
 ----
+<1> In this example, the `spec.liveMigrationConfig` array contains the default values for each field.
++
+[NOTE]
+====
+You can restore the default value for any `spec.liveMigrationConfig` field by deleting that key/value pair and saving the file. For example, delete `progressTimeout: <value>` to restore the default `progressTimeout: 150`.
+====

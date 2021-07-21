@@ -33,9 +33,8 @@ link:https://access.redhat.com/articles/4740011[]
 
 .Additional resources
 
+* xref:../../operators/understanding/olm-rh-catalogs.adoc#olm-rh-catalogs[Red Hat-provided Operator catalogs]
 * xref:../../operators/operator_sdk/osdk-generating-csvs.adoc#olm-enabling-operator-for-restricted-network_osdk-generating-csvs[Enabling your Operator for restricted network environments]
-
-include::modules/olm-understanding-operator-catalog-images.adoc[leveloffset=+1]
 
 [id="olm-restricted-network-prereqs"]
 == Prerequisites
@@ -53,9 +52,8 @@ include::modules/olm-pruning-index-image.adoc[leveloffset=+1]
 include::modules/olm-mirroring-catalog.adoc[leveloffset=+1]
 .Additional resources
 
-* xref:../../installing/install_config/installing-restricted-networks-preparations.adoc#installing-restricted-networks-preparations[Creating a mirror registry for installation in a restricted network]
+* xref:../../installing/installing-mirroring-installation-images.adoc#installing-mirroring-installation-images[Mirroring images for a disconnected installation]
 * xref:../../operators/operator_sdk/osdk-generating-csvs.adoc#olm-arch-os-support_osdk-generating-csvs[Architecture and operating system support for Operators]
-* xref:../../operators/admin/olm-managing-custom-catalogs.adoc#olm-mirroring-package-manifest-catalog_olm-managing-custom-catalogs[Mirroring a Package Manifest Format catalog image]
 
 include::modules/olm-creating-catalog-from-index.adoc[leveloffset=+1]
 * If your index image is hosted on a private registry and requires authentication, see xref:../../operators/admin/olm-managing-custom-catalogs.adoc#olm-accessing-images-private-registries_olm-managing-custom-catalogs[Accessing images for Operators from private registries].

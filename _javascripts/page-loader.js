@@ -48,6 +48,34 @@ function versionSelector(list) {
 
 }
 
+// checks what language was selected and then sends the user to the portal for their localized version
+function selectLang(langList) {
+
+  var lang = langList[langList.selectedIndex].value;
+  var winPath = window.location.pathname;
+
+  console.log("Lang: " + lang);
+  console.log("Win Path: " + winPath);
+
+  var currentVersion = document.getElementById("version-selector").value;
+  // var currentVersion = "4.7";
+  console.log("CurrentVersion: " + currentVersion);
+
+  // path for the file to reference on portal (the last bit removes .html)
+  var path = winPath.substring(winPath.lastIndexOf(currentVersion) +   currentVersion.length, winPath.length - 5);
+
+  console.log("Path: " + path);
+
+  var portalBaseURL = "https://access.redhat.com/documentation";
+  var finalURL = portalBaseURL + "/" + lang + "/openshift_container_platform/" + currentVersion + "/html/" + path;
+
+  console.log("Final URL: " + finalURL);
+
+  // alert(finalURL);
+  window.location.href = finalURL;
+
+}
+
 // sets the current version in the drop down and sets up suggest an edit options
 function selectVersion(currentVersion) {
 
@@ -58,6 +86,9 @@ function selectVersion(currentVersion) {
   if(el) {
     el.value = currentVersion;
   }
+
+  // check the docs referrer to add warning box based on whether we are coming from rosa docs or elsewhere
+  addReferrer();
 
   // the rest creates an suggest an edit element for h1 and h2 elements
 
@@ -144,4 +175,34 @@ function selectVersion(currentVersion) {
       });
     }
   }
+}
+
+function addReferrer() {
+
+  // grab target element reference
+
+  // we want to add a notice to the top of the OCP docs page if the reader is coming from ROSA docs
+
+  // check the referrer
+  // alert(document.referrer);
+
+  // var ref = "http://127.0.0.1/addreferrer";
+  // var ref = "http://127.0.0.1/addreferrer/authentication/understanding-authentication.html";
+
+  var ref = "https://docs.openshift.com/rosa";
+
+  if(document.referrer && document.referrer.startsWith(ref) && !document.location.href.startsWith(ref)) {
+
+    // get the first section/header
+    var elements = document.getElementsByClassName('sect1');
+    var requiredElement = elements[0];
+
+    // the warning text
+    var text = '<div class="admonitionblock important"><table><tbody><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>This is the <b>OpenShift Container Platform</b> documentation. There may be some sections that don\'t apply to ROSA docs.</p><p>Click <a href="' + document.referrer + '">here</a> to go back to the page you came from or browse the full <a href="https://docs.openshift.com/rosa/welcome/index.html">ROSA documentation</a>.</p></div></td></tr></tbody></table></div>';
+
+    // insert the element before target element
+    requiredElement.insertAdjacentHTML("beforebegin", text);
+  }
+
+
 }

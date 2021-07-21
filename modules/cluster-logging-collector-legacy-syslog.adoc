@@ -5,7 +5,7 @@
 [id="cluster-logging-collector-legacy-syslog_{context}"]
 = Forwarding logs using the legacy syslog method
 
-You can use the *syslog* RFC3164 protocol to send logs to destinations outside of your {product-title} cluster instead of the default Elasticsearch log store by creating a configuration file and config map. You are responsible for configuring the external log aggregator to receive the logs from {product-title}.
+You can use the *syslog* RFC3164 protocol to send logs to destinations outside of your {product-title} cluster by creating a configuration file and config map. You are responsible for configuring the external log aggregator to receive the logs from {product-title}.
 
 [IMPORTANT]
 ====
@@ -109,7 +109,7 @@ rfc 3164 <5>
 $ oc create configmap syslog --from-file=syslog.conf -n openshift-logging
 ----
 
-The Cluster Logging Operator redeploys the Fluentd pods. If the pods do not redeploy, you can delete the Fluentd
+The Red Hat OpenShift Logging Operator redeploys the Fluentd pods. If the pods do not redeploy, you can delete the Fluentd
 pods to force them to redeploy.
 
 [source,terminal]

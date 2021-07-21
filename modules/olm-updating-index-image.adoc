@@ -4,7 +4,7 @@
 // * operators/admin/olm-restricted-network.adoc
 
 ifdef::openshift-origin[]
-:index-image: upstream-community-operators
+:index-image: catalog
 endif::[]
 ifndef::openshift-origin[]
 :index-image: redhat-operator-index
@@ -34,7 +34,7 @@ endif::[]
 [source,terminal]
 ----
 $ opm index add \
-    --bundles <registry>/<namespace>/<new_bundle_image>:<tag> \//<1>
+    --bundles <registry>/<namespace>/<new_bundle_image>@sha256:<digest> \//<1>
     --from-index <registry>/<namespace>/<existing_index_image>:<tag> \//<2>
     --tag <registry>/<namespace>/<existing_index_image>:<tag> <3>
 ----

@@ -30,6 +30,7 @@ have to contact Red Hat support with your installation logs.
 * Create and configure a VPC and associated subnets in GCP.
 * Create and configure networking and load balancers in GCP.
 * Create control plane and compute roles.
+* Ensure pyOpenSSL is installed.
 
 .Procedure
 
@@ -41,7 +42,7 @@ template describes the bootstrap machine that your cluster requires.
 +
 [source,terminal]
 ----
-$ export CLUSTER_IMAGE=`gcloud compute images describe ${INFRA_ID}-rhcos-image --format json | jq -r .selfLink`
+$ export CLUSTER_IMAGE=(`gcloud compute images describe ${INFRA_ID}-rhcos-image --format json | jq -r .selfLink`)
 ----
 
 . Create a bucket and upload the `bootstrap.ign` file:
@@ -92,7 +93,8 @@ EOF
 <5> `control_subnet` is the `selfLink` URL to the control subnet.
 <6> `image` is the `selfLink` URL to the {op-system} image.
 <7> `machine_type` is the machine type of the instance, for example `n1-standard-4`.
-<8> `bootstrap_ign` is the URL output when creating a signed URL above.
+<8> `root_volume_size` is the boot disk size for the bootstrap machine.
+<9> `bootstrap_ign` is the URL output when creating a signed URL.
 
 . Create the deployment by using the `gcloud` CLI:
 +

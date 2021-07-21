@@ -3,9 +3,15 @@
 include::modules/virt-document-attributes.adoc[]
 :context: virt-importing-rhv-vm
 :virt-importing-rhv-vm:
+
 toc::[]
 
 You can import a single Red Hat Virtualization (RHV) virtual machine into {VirtProductName} by using the VM Import wizard or the CLI.
+
+:FeatureName: Importing a RHV VM
+include::modules/virt-deprecated-feature.adoc[leveloffset=+1]
+
+This feature will be replaced by the link:https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization[Migration Toolkit for Virtualization].
 
 include::modules/virt-features-for-storage-matrix.adoc[leveloffset=+1]
 include::modules/virt-importing-vm-prerequisites.adoc[leveloffset=+1]

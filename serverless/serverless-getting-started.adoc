@@ -8,6 +8,8 @@ toc::[]
 
 {ServerlessProductName} simplifies the process of delivering code from development into production by reducing the need for infrastructure set up or back-end development by developers.
 
+Serverless is a cloud computing model where application developers do not need to provision servers or manage scaling for their applications. These routine tasks are abstracted away by the platform, allowing developers to push code to production more quickly than in traditional models.
+
 [id="serverless-getting-started-how-it-works"]
 == How {ServerlessProductName} works
 
@@ -22,8 +24,8 @@ Developers on {ServerlessProductName} can use the provided Kubernetes native API
 
 The set of supported features, configurations, and integrations for {ServerlessProductName}, current and past versions, are available at the link:https://access.redhat.com/articles/4912821[Supported Configurations page].
 
-[id="serverless-getting-started-next-steps"]
+[id="next-steps_serverless-getting-started"]
 == Next steps
 
-* Install the xref:../serverless/admin_guide/installing-openshift-serverless.adoc#installing-openshift-serverless[{ServerlessOperatorName}] on your {product-title} cluster to get started.
+* Install the xref:../serverless/admin_guide/install-serverless-operator.adoc#install-serverless-operator[{ServerlessOperatorName}] on your {product-title} cluster to get started.
 * View the xref:../serverless/serverless-release-notes.adoc#serverless-release-notes[{ServerlessProductName} release notes].
